@@ -48,9 +48,13 @@ class PictureController extends Controller
      * @param  \App\Picture  $picture
      * @return \Illuminate\Http\Response
      */
-    public function show(Picture $picture)
+    public function show(Request $request, Picture $picture)
     {
-        //
+      if (\Str::startsWith($request->header('Accept'), 'image')) {
+        return \Storage::get($picture->storage_path);
+      }
+      
+      return view('pictures.show', compact('picture'));
     }
 
     /**

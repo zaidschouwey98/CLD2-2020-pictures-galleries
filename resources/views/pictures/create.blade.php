@@ -5,14 +5,15 @@
 @endpush
 
 @section('content')
-<form action="{{ route('pictures.store') }}" method="POST" enctype="multipart/form-data"
-data-s3-attributes="{{ json_encode($s3attributes) }}" data-s3-inputs="{{ json_encode($s3inputs) }}">
+<form class="s3upload" action="{{ route('pictures.store') }}" method="POST" enctype="multipart/form-data"
+data-s3attributes="{{ json_encode($s3attributes) }}" data-s3inputs="{{ json_encode($s3inputs) }}">
   @csrf
   <input type="text" name="title" />
   @error('title')
       <div class="alert alert-danger">{{ $message }}</div>
   @enderror
   <input type="file" name="file"/>
+  <input type="hidden" name="storage_path" value="{{ $s3inputs['key'] }}">
   <input type="submit" />
 </form>
 @endsection
